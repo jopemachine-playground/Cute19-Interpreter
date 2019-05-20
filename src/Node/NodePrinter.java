@@ -21,7 +21,7 @@ public class NodePrinter {
 			sb.append("( )");
 			return;
 		}
-		if(listNode == ListNode.END_LIST) {
+		if(listNode == ListNode.EMPTY_LIST) {
 			return;
 		}
 	
@@ -44,7 +44,7 @@ public class NodePrinter {
 		if(node == null) {
 			return;
 		}
-		// ListNodeÀÇ °æ¿ì
+		// ListNodeï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(node instanceof ListNode) {
 
 			ListNode ln = (ListNode) node;
@@ -58,18 +58,18 @@ public class NodePrinter {
 			printNode(ln);
 			sb.append(")");
 		}
-		// QuoteNodeÀÇ °æ¿ì
+		// QuoteNodeï¿½ï¿½ ï¿½ï¿½ï¿½
 		else if(node instanceof QuoteNode){
 			QuoteNode qd = (QuoteNode) node;
 			printNode(qd);
 		}
-		// ValueNodeÀÇ °æ¿ì
+		// ValueNodeï¿½ï¿½ ï¿½ï¿½ï¿½
 		else if(node instanceof ValueNode){
 			ValueNode vn = (ValueNode) node;
 			sb.append("[" + vn + "]");
 		}
 		
-		// Á¸ÀçÇÏÁö ¾Ê´Â ³ëµå Å¬·¡½º
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 		else {
 			assert(false);
 		}

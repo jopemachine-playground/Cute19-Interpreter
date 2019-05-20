@@ -58,16 +58,16 @@ public class BinaryOpNode implements ValueNode {
 		abstract TokenType tokenType();
 	}
 	
-	public BinType value;
+	public BinType binType;
 	
 	public void setValue(TokenType tType) {
 		BinType bType = BinType.getBinType(tType);
-		value = bType;
+		binType = bType;
 	}
 	
 	@Override
 	public String toString() {
-		return value.name();
+		return binType.name();
 	}
 
 }

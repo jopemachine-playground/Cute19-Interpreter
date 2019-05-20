@@ -79,16 +79,16 @@ public class FunctionNode implements ValueNode {
 		abstract TokenType tokenType();
 	}
 
-	public FunctionType value;
+	public FunctionType funcType;
 	
 	@Override
 	public String toString() {
 
-		return value.name();
+		return funcType.name();
 	}
 
 	public void setValue(FunctionType tType) {
 		FunctionType fType = FunctionType.getFunctionType(tType);
-		value = fType;
+		funcType = fType;
 	}
 }

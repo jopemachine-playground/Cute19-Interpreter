@@ -51,7 +51,7 @@ public class CuteParser {
 		
 		case APOSTROPHE:
 			QuoteNode quoteNode = new QuoteNode(parseExpr());
-			ListNode listNode = ListNode.cons(quoteNode, ListNode.END_LIST);
+			ListNode listNode = ListNode.cons(quoteNode, ListNode.EMPTY_LIST);
 			return listNode;
 			
 		case ID:
@@ -65,87 +65,87 @@ public class CuteParser {
 
 		case DIV:
 			BinaryOpNode divNode = new BinaryOpNode();
-			divNode.value = BinType.DIV;
+			divNode.binType = BinType.DIV;
 			return divNode;
 			
 		case EQ:
 			BinaryOpNode eqNode = new BinaryOpNode();
-			eqNode.value = BinType.EQ;
+			eqNode.binType = BinType.EQ;
 			return eqNode;
 			
 		case MINUS:
 			BinaryOpNode minusNode = new BinaryOpNode();
-			minusNode.value = BinType.MINUS;
+			minusNode.binType = BinType.MINUS;
 			return minusNode;
 			
 		case GT:
 			BinaryOpNode gtNode = new BinaryOpNode();
-			gtNode.value = BinType.GT;
+			gtNode.binType = BinType.GT;
 			return gtNode;
 			
 		case PLUS:
 			BinaryOpNode plusNode = new BinaryOpNode();
-			plusNode.value = BinType.PLUS;
+			plusNode.binType = BinType.PLUS;
 			return plusNode;
 			
 		case TIMES:
 			BinaryOpNode timesNode = new BinaryOpNode();
-			timesNode.value = BinType.TIMES;
+			timesNode.binType = BinType.TIMES;
 			return timesNode;
 			
 		case LT:
 			BinaryOpNode ltNode = new BinaryOpNode();
-			ltNode.value = BinType.LT;
+			ltNode.binType = BinType.LT;
 			return ltNode;
 
 		case ATOM_Q:
 			FunctionNode atom_qNode = new FunctionNode();
-			atom_qNode.value = FunctionType.ATOM_Q;
+			atom_qNode.funcType = FunctionType.ATOM_Q;
 			return atom_qNode;
 			
 		case CAR:
 			FunctionNode carNode = new FunctionNode();
-			carNode.value = FunctionType.CAR;
+			carNode.funcType = FunctionType.CAR;
 			return carNode;
 			
 		case CDR:
 			FunctionNode cdrNode = new FunctionNode();
-			cdrNode.value = FunctionType.CDR;
+			cdrNode.funcType = FunctionType.CDR;
 			return cdrNode;
 			
 		case COND:
 			FunctionNode condNode = new FunctionNode();
-			condNode.value = FunctionType.COND;
+			condNode.funcType = FunctionType.COND;
 			return condNode;
 			
 		case CONS:
 			FunctionNode consNode = new FunctionNode();
-			consNode.value = FunctionType.CONS;
+			consNode.funcType = FunctionType.CONS;
 			return consNode;
 			
 		case DEFINE:
 			FunctionNode defineNode = new FunctionNode();
-			defineNode.value = FunctionType.DEFINE;
+			defineNode.funcType = FunctionType.DEFINE;
 			return defineNode;
 			
 		case EQ_Q:
 			FunctionNode eq_qNode = new FunctionNode();
-			eq_qNode.value = FunctionType.EQ_Q;
+			eq_qNode.funcType = FunctionType.EQ_Q;
 			return eq_qNode;
 			
 		case LAMBDA:
 			FunctionNode lambdaNode = new FunctionNode();
-			lambdaNode.value = FunctionType.LAMBDA;
+			lambdaNode.funcType = FunctionType.LAMBDA;
 			return lambdaNode;
 			
 		case NOT:
 			FunctionNode notNode = new FunctionNode();
-			notNode.value = FunctionType.NOT;
+			notNode.funcType = FunctionType.NOT;
 			return notNode;
 			
 		case NULL_Q:
 			FunctionNode null_qNode = new FunctionNode();
-			null_qNode.value = FunctionType.NULL_Q;
+			null_qNode.funcType = FunctionType.NULL_Q;
 			return null_qNode;
 			
 		case FALSE:
@@ -177,7 +177,7 @@ public class CuteParser {
 			return null;
 		}
 		if(head == END_OF_LIST) {
-			return ListNode.END_LIST;
+			return ListNode.EMPTY_LIST;
 		}
 		
 		ListNode tail = parseExprList();
