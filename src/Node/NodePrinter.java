@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 public class NodePrinter {
-	private final String OUTPUT_FILENAME = "output07.txt";
+	private final String OUTPUT_FILENAME = "output08.txt";
 
 	private StringBuffer sb = new StringBuffer();
 	private Node root;
@@ -18,10 +18,7 @@ public class NodePrinter {
 
 	private void printNode(ListNode listNode) {
 		if (listNode == ListNode.EMPTY_LIST) {
-			sb.append("( )");
-			return;
-		}
-		if(listNode == ListNode.EMPTY_LIST) {
+//			sb.append("( )");
 			return;
 		}
 	
@@ -44,7 +41,7 @@ public class NodePrinter {
 		if(node == null) {
 			return;
 		}
-		// ListNode�� ���
+
 		if(node instanceof ListNode) {
 
 			ListNode ln = (ListNode) node;
@@ -58,18 +55,17 @@ public class NodePrinter {
 			printNode(ln);
 			sb.append(")");
 		}
-		// QuoteNode�� ���
+
 		else if(node instanceof QuoteNode){
 			QuoteNode qd = (QuoteNode) node;
 			printNode(qd);
 		}
-		// ValueNode�� ���
+
 		else if(node instanceof ValueNode){
 			ValueNode vn = (ValueNode) node;
 			sb.append("[" + vn + "]");
 		}
 		
-		// �������� �ʴ� ��� Ŭ����
 		else {
 			assert(false);
 		}

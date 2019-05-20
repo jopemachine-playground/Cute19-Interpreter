@@ -10,7 +10,6 @@ public class CuteInterpreter {
     public static final void main(String... args) throws Exception {
         ClassLoader cloader = CuteInterpreter.class.getClassLoader();
         File file = new File(cloader.getResource("as08.txt").getFile()); 
-        //printTextFile(file);
         
         CuteParser cuteParser = new CuteParser(file);
         CuteInterpreter interpreter = new CuteInterpreter();
@@ -45,8 +44,10 @@ public class CuteInterpreter {
     }
     
     private Node runList(ListNode list) {
+    	
     	if(list.equals(ListNode.EMPTY_LIST))
     		return list;
+    	
     	if(list.car() instanceof FunctionNode) {
     		return runFunction((FunctionNode) list.car(), (ListNode) stripList(list.cdr()));
     	}
@@ -61,6 +62,15 @@ public class CuteInterpreter {
     		case CAR:
     		case CDR:
     		case CONS:
+    		case COND:
+    		case LAMBDA:
+    		case DEFINE:
+    		case ATOM_Q:
+    		case NULL_Q:
+    		case NOT:
+    		case EQ_Q:
+    			
+    			
     		default:
     			break;
     	}
@@ -84,6 +94,9 @@ public class CuteInterpreter {
     		case MINUS:
     		case TIMES:
     		case DIV:
+    		case LT:
+    		case GT:
+    		case EQ:
     		default:
     			break;
     	}
