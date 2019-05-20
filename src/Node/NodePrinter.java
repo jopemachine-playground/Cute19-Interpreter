@@ -63,7 +63,8 @@ public class NodePrinter {
 
 		else if(node instanceof ValueNode){
 			ValueNode vn = (ValueNode) node;
-			sb.append("[" + vn + "]");
+			// sb.append("[" + vn + "]");
+			sb.append(vn);
 		}
 		
 		else {

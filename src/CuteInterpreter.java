@@ -24,9 +24,11 @@ public class CuteInterpreter {
     }
     
     public Node runExpr(Node rootExpr) {
+    	
     	if(rootExpr == null) {
     		return null;
     	}
+    	
     	if(rootExpr instanceof IdNode) {
     		return rootExpr;
     	}
@@ -86,11 +88,26 @@ public class CuteInterpreter {
     		return node;
     	}
     }
+    
     private Node runBinary(ListNode list) {
     	BinaryOpNode operator = (BinaryOpNode) list.car();
+    	ListNode operands = list.cdr();
     	
     	switch(operator.binType) {
     		case PLUS:
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 + operand_2) + "");
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 + operand_2) + "");
+    			}
+    			break;
     		case MINUS:
     		case TIMES:
     		case DIV:
