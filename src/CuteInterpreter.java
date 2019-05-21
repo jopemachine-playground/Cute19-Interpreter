@@ -62,7 +62,12 @@ public class CuteInterpreter {
     private Node runFunction(FunctionNode operator, ListNode operand) {
     	switch(operator.funcType) {
     		case CAR:
+    			if(operand.car() instanceof QuoteNode) {
+    				
+    			}
+    			return operand.car();
     		case CDR:
+    			return operand.cdr();
     		case CONS:
     		case COND:
     		case LAMBDA:
@@ -71,14 +76,15 @@ public class CuteInterpreter {
     		case NULL_Q:
     		case NOT:
     		case EQ_Q:
-    			
-    			
+    		case QUOTE:
+    			return runQuote(operand);
     		default:
     			break;
     	}
     	return null;
     }
     
+    // list.cdr()의 결과가 한 개의 노드라면, ListNode가 아닌 Node가 되게 한다.
     private Node stripList(ListNode node) {
     	if(node.car() instanceof ListNode && node.cdr() == ListNode.EMPTY_LIST) {
     		Node listNode = node.car();
