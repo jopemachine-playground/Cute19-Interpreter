@@ -109,11 +109,98 @@ public class CuteInterpreter {
     			}
     			break;
     		case MINUS:
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 - operand_2) + "");
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 - operand_2) + "");
+    			}
+    			break;
     		case TIMES:
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 * operand_2) + "");
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 * operand_2) + "");
+    			}
+    			break;
     		case DIV:
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 / operand_2) + "");
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new IntNode((operand_1 / operand_2) + "");
+    			}
+    			break;
+    			
     		case LT:
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new BooleanNode(operand_1 < operand_2);
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new BooleanNode(operand_1 < operand_2);
+    			}
+    			
+				break;
+				
     		case GT:
+    			
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new BooleanNode(operand_1 > operand_2);
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new BooleanNode(operand_1 > operand_2);
+    			}
+    			
+				break;
+
     		case EQ:
+
+    			if(operands.car() instanceof IntNode) {
+    				Integer operand_1 = ((IntNode)(operands.car())).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new BooleanNode(operand_1.equals(operand_2));
+    			}
+    			else if(operands.car() instanceof ListNode) {
+    				Integer operand_1 = ((IntNode)(runExpr(operands.car()))).getValue();
+    				Integer operand_2 = ((IntNode)(runExpr(operands.cdr().car()))).getValue();
+    				
+    				return new BooleanNode(operand_1.equals(operand_2));
+    			}
+    			
+				break;
+				
     		default:
     			break;
     	}
