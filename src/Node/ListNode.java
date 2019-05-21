@@ -12,17 +12,6 @@ public interface ListNode extends Node{
 		}
 	};
 	
-//	static ListNode END_LIST = new ListNode() {
-//		@Override
-//		public Node car() {
-//			return null;
-//		}
-//		@Override
-//		public ListNode cdr() {
-//			return null;
-//		}
-//	};
-	
 	static ListNode cons(Node head, ListNode tail) {
 		return new ListNode() {
 			@Override
