@@ -55,7 +55,7 @@ public class CuteInterpreter {
 		}
 		return list;
 	}
-	
+
 	private boolean operandCheckQuotedList(ListNode operand) {
 		if(!(operand.car() instanceof QuoteNode)) {
 			return false;
@@ -64,15 +64,15 @@ public class CuteInterpreter {
 	}
 
 	private Node runFunction(FunctionNode operator, ListNode operand) {
-		
+
 		switch (operator.funcType) {
 		case CAR:
-			
+
 			if(operandCheckQuotedList(operand) == false) {
 				errorLog("Wrong Function Use");
 				return null;
 			}
-			
+
 			if(((ListNode)(runQuote(operand))).car() instanceof ListNode) {
 				return new QuoteNode(((ListNode)(runQuote(operand))).car());
 			}
@@ -80,12 +80,12 @@ public class CuteInterpreter {
 				return ((ListNode)(runQuote(operand))).car();
 			}
 		case CDR:
-			
+
 			if(operandCheckQuotedList(operand) == false) {
 				errorLog("Wrong Function Use");
 				return null;
 			}
-			
+
 			if(((ListNode)(runQuote(operand))).cdr() instanceof ListNode) {
 				return new QuoteNode(((ListNode)(runQuote(operand))).cdr());
 			}
@@ -93,25 +93,25 @@ public class CuteInterpreter {
 				return ((ListNode)(runQuote(operand))).cdr();
 			}
 		case CONS:
-		
-			
-			// Ã¹ ¹øÂ° ÇÇ¿¬»êÀÚ°¡ QuoteNodeÀÎ °æ¿ì
+
+
+			// Ã¹ ï¿½ï¿½Â° ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ QuoteNodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if(operand.car() instanceof ListNode) {
 				if(((ListNode)(operand.car())).car() instanceof QuoteNode) {
-					System.out.println("½ÇÇà1");
+					System.out.println("ï¿½ï¿½ï¿½ï¿½1");
 					Node qnode = ((QuoteNode)(((ListNode)(operand.car())).car())).nodeInside();
 					return ListNode.cons(((operand.car())).car(), operand.cdr());
-				}	
+				}
 			}
-			// µÎ ¹øÂ° ÇÇ¿¬»êÀÚ°¡ QuoteNodeÀÎ °æ¿ì
-	
+			// ï¿½ï¿½ ï¿½ï¿½Â° ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ QuoteNodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
 			if(((ListNode)(operand.cdr())).car() instanceof QuoteNode){
-				System.out.println("½ÇÇà2");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½2");
 				QuoteNode qnode = (QuoteNode)(((ListNode)(operand.cdr())).car());
 				return ListNode.cons(operand.car(), (ListNode) qnode.nodeInside());
 			}
 
-			
+
 		case COND:
 		case LAMBDA:
 		case DEFINE:
