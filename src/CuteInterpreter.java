@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.stream.Stream;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import Node.*;
@@ -57,7 +59,7 @@ public class CuteInterpreter {
 	}
 
 	private boolean operandCheckQuotedList(ListNode operand) {
-		if(!(operand.car() instanceof QuoteNode)) {
+		if (!(operand.car() instanceof QuoteNode)) {
 			return false;
 		}
 		return true;
@@ -68,49 +70,190 @@ public class CuteInterpreter {
 		switch (operator.funcType) {
 		case CAR:
 
-			if(operandCheckQuotedList(operand) == false) {
+			if (operandCheckQuotedList(operand) == false) {
 				errorLog("Wrong Function Use");
 				return null;
 			}
 
-			if(((ListNode)(runQuote(operand))).car() instanceof ListNode) {
-				return new QuoteNode(((ListNode)(runQuote(operand))).car());
-			}
-			else {
-				return ((ListNode)(runQuote(operand))).car();
+			if (((ListNode) (runQuote(operand))).car() instanceof ListNode) {
+				return new QuoteNode(((ListNode) (runQuote(operand))).car());
+			} else {
+				return ((ListNode) (runQuote(operand))).car();
 			}
 		case CDR:
 
-			if(operandCheckQuotedList(operand) == false) {
+			if (operandCheckQuotedList(operand) == false) {
 				errorLog("Wrong Function Use");
 				return null;
 			}
 
-			if(((ListNode)(runQuote(operand))).cdr() instanceof ListNode) {
-				return new QuoteNode(((ListNode)(runQuote(operand))).cdr());
+			if (((ListNode) (runQuote(operand))).cdr() instanceof ListNode) {
+				return new QuoteNode(((ListNode) (runQuote(operand))).cdr());
+			} else {
+				return ((ListNode) (runQuote(operand))).cdr();
 			}
-			else {
-				return ((ListNode)(runQuote(operand))).cdr();
-			}
-			
-		case CONS:
-			Node node = runQuote(((ListNode) (operand.cdr().car())));
-			return new QuoteNode(ListNode.cons(operand.car(), (ListNode)node));
-			
-		case COND:
-		case LAMBDA:
-		case DEFINE:
-		case ATOM_Q:
-		case NULL_Q:
-		case NOT:
-		case EQ_Q:
 
+		case CONS:
+			Node leftOperand;
+			Node rightOperand;
+
+			// 첫 번째 피연산자 처리
+			if ((operand.car() instanceof ListNode)) {
+				if (((ListNode) (operand.car())).car() instanceof QuoteNode) {
+					leftOperand = runQuote((ListNode) operand.car());
+				} else {
+					leftOperand = null;
+					errorLog("Wrong Input 1");
+				}
+			} else {
+				leftOperand = operand.car();
+			}
+
+			// 두 번째 피연산자 처리
+			if (operand.cdr().car() instanceof ListNode) {
+				if (((ListNode) (operand.cdr().car())).car() instanceof QuoteNode) {
+					rightOperand = runQuote(((ListNode) (operand.cdr().car())));
+				} else {
+					rightOperand = null;
+					errorLog("Wrong Input 2");
+				}
+			} else {
+				rightOperand = ListNode.cons(operand.cdr().car(), ListNode.EMPTY_LIST);
+			}
+
+			return new QuoteNode(ListNode.cons(leftOperand, (ListNode) rightOperand));
+
+		case COND:
+
+			return parsingConditionTree(operand, (ListNode) operand.car());
+
+		case ATOM_Q:
+
+			Node nd = ((QuoteNode) operand.car()).nodeInside();
+
+			if (nd instanceof ListNode && !(nd.equals(ListNode.EMPTY_LIST))) {
+				return BooleanNode.FALSE_NODE;
+			} else {
+				return BooleanNode.TRUE_NODE;
+			}
+
+		case NULL_Q:
+			
+			Node node = ((QuoteNode) operand.car()).nodeInside();
+
+			if (node.equals(ListNode.EMPTY_LIST)) {
+				return BooleanNode.TRUE_NODE;
+			} else {
+				return BooleanNode.FALSE_NODE;
+			}
+
+		case NOT:
+			
+			return parsingNotTree(operand);
+			
+		case EQ_Q:
+			
+			Node leftNode;
+			Node rightNode;
+			
+			if(!(operand.car() instanceof ListNode)) {
+				errorLog("Wrong Input");
+				return null;
+			}
+			
+			if(((ListNode)(operand.car())).car() instanceof QuoteNode) {
+
+				leftNode = runQuote((ListNode) operand.car());
+				rightNode = runQuote(((ListNode) (operand.cdr().car()))); 
+				
+				if(leftNode.equals(rightNode)) {
+					return BooleanNode.TRUE_NODE; 
+				}
+				else {
+					return BooleanNode.FALSE_NODE;
+				}
+			}
+
+		case LAMBDA:
+			return null;
+		case DEFINE:
+			return null;
 		default:
 			break;
 		}
 		return null;
 	}
 
+	private Node parsingConditionTree(ListNode ramainderListNode, ListNode presentListNode) {
+
+		BooleanNode conditionBoolean = null;
+
+		// 각 리스트의 condition 요소가 List 형태인지 BooleanNode 자체가 들어가 있는지를 판단
+		if (presentListNode.car() instanceof BooleanNode) {
+			conditionBoolean = (BooleanNode) presentListNode.car();
+		} else if (presentListNode.car() instanceof ListNode) {
+			ListNode condition = ((ListNode) (presentListNode.car()));
+			conditionBoolean = (BooleanNode) runBinary(condition);
+		} else {
+			errorLog("Wrong Input");
+		}
+
+		System.out.println(conditionBoolean);
+
+		// 조건에 맞는 식을 찾는다면 트리 파싱을 종료
+		if (conditionBoolean.toString() == "#T") {
+			return presentListNode.cdr();
+		} else if (conditionBoolean.toString() == "#F") {
+
+		}
+
+		// 남은 remainder가 없다면 트리 파싱을 종료
+		if (!(ramainderListNode.cdr().car() instanceof ListNode)) {
+			return null;
+		}
+
+		// 조건에 맞는 식이 없고, 남은 조건이 남아있다면 파싱한다.
+		return parsingConditionTree(ramainderListNode.cdr(), (ListNode) ramainderListNode.cdr().car());
+	}
+	
+	private Node parsingNotTree(ListNode listNode) {
+		
+		if(listNode.car() instanceof BooleanNode) {
+			return notOp((BooleanNode)listNode.car());
+		}
+		else if(listNode.car() instanceof BinaryOpNode) {
+			Node result = runBinary(listNode);
+			if(result instanceof BooleanNode) {
+				return notOp((BooleanNode)result);
+			}
+			else {
+				errorLog("Wrong Input");
+				return null;
+			}
+		}
+		
+		else if(listNode.car() instanceof ListNode) {
+			return parsingNotTree((ListNode) listNode.car());
+		}
+		else {
+			errorLog("Wrong Input");
+			return null;
+		}
+		
+	}
+
+	private Node notOp(BooleanNode bNode) {
+		if(bNode.toString() == "#T") {
+			return BooleanNode.FALSE_NODE;
+		}
+		else if(bNode.toString() == "#F"){
+			return BooleanNode.TRUE_NODE;
+		}
+		else {
+			errorLog("Wrong Input");
+			return null;
+		}
+	}
 	private Node stripList(ListNode node) {
 		if (node.car() instanceof ListNode && node.cdr() == ListNode.EMPTY_LIST) {
 			Node listNode = node.car();
