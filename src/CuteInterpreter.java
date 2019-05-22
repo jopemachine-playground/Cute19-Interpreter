@@ -92,26 +92,11 @@ public class CuteInterpreter {
 			else {
 				return ((ListNode)(runQuote(operand))).cdr();
 			}
+			
 		case CONS:
-
-
-			// ù ��° �ǿ����ڰ� QuoteNode�� ����
-			if(operand.car() instanceof ListNode) {
-				if(((ListNode)(operand.car())).car() instanceof QuoteNode) {
-					System.out.println("����1");
-					Node qnode = ((QuoteNode)(((ListNode)(operand.car())).car())).nodeInside();
-					return ListNode.cons(((operand.car())).car(), operand.cdr());
-				}
-			}
-			// �� ��° �ǿ����ڰ� QuoteNode�� ����
-
-			if(((ListNode)(operand.cdr())).car() instanceof QuoteNode){
-				System.out.println("����2");
-				QuoteNode qnode = (QuoteNode)(((ListNode)(operand.cdr())).car());
-				return ListNode.cons(operand.car(), (ListNode) qnode.nodeInside());
-			}
-
-
+			Node node = runQuote(((ListNode) (operand.cdr().car())));
+			return new QuoteNode(ListNode.cons(operand.car(), (ListNode)node));
+			
 		case COND:
 		case LAMBDA:
 		case DEFINE:
