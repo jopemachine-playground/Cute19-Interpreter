@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 public class NodePrinter {
-	private final String OUTPUT_FILENAME = "output08.txt";
+//	private final String OUTPUT_FILENAME = "output08.txt";
 
 	private StringBuffer sb = new StringBuffer();
 	private Node root;
@@ -73,15 +73,8 @@ public class NodePrinter {
 	
 	}
 	
-	public void prettyPrint() {
+	public String prettyPrint() {
 		printNode(root);
-
-		try(FileWriter fw = new FileWriter(OUTPUT_FILENAME);
-				PrintWriter pw = new PrintWriter(fw)){
-			pw.write(sb.toString());
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
+		return sb.toString();
 	}
 }

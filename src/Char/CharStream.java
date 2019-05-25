@@ -3,6 +3,7 @@ package Char;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -12,8 +13,26 @@ public class CharStream {
 	private final Reader reader;
 	private Character cache;
 	
-	public static CharStream from(File file) throws FileNotFoundException {
-		return new CharStream(new FileReader(file));
+	// 실제론 존재하지 않는 가상의 파일 객체를 만들어 사용한다
+	public static CharStream from(String input){
+		File temp = new File("test.txt");
+		FileWriter writer;
+		try {
+			writer = new FileWriter(temp);
+			writer.write(input);
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			return new CharStream(new FileReader(temp));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	CharStream(Reader reader) {

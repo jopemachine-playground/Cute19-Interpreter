@@ -12,14 +12,14 @@ import Token.*;
 
 public class Scanner {
     // return tokens as an Iterator
-    public static Iterator<Token> scan(File file) throws FileNotFoundException {
-        ScanContext context = new ScanContext(file);
+    public static Iterator<Token> scan(String input) {
+        ScanContext context = new ScanContext(input);
         return new TokenIterator(context);
     }
 
     // return tokens as a Stream 
-    public static Stream<Token> stream(File file) throws FileNotFoundException {
-        Iterator<Token> tokens = scan(file);
+    public static Stream<Token> stream(String input) {
+        Iterator<Token> tokens = scan(input);
         return StreamSupport.stream(
                 Spliterators.spliteratorUnknownSize(tokens, Spliterator.ORDERED), false);
     }

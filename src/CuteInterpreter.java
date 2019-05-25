@@ -9,18 +9,7 @@ import Node.*;
 import Scanner.CuteParser;
 
 public class CuteInterpreter {
-	public static final void main(String... args) throws Exception {
-		ClassLoader cloader = CuteInterpreter.class.getClassLoader();
-		File file = new File(cloader.getResource("as08.txt").getFile());
-
-		CuteParser cuteParser = new CuteParser(file);
-		CuteInterpreter interpreter = new CuteInterpreter();
-		Node parseTree = cuteParser.parseExpr();
-		Node resultNode = interpreter.runExpr(parseTree);
-		NodePrinter nodePrinter = new NodePrinter(resultNode);
-		nodePrinter.prettyPrint();
-	}
-
+	
 	private void errorLog(String err) {
 		System.out.println(err);
 	}

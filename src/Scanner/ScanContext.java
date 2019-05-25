@@ -9,8 +9,8 @@ public class ScanContext {
 	private final CharStream input;
 	private StringBuilder builder;
 	
-	ScanContext(File file) throws FileNotFoundException {
-		this.input = CharStream.from(file);
+	ScanContext(String input) {
+		this.input = CharStream.from(input);
 		this.builder = new StringBuilder();
 	}
 	

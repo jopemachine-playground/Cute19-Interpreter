@@ -21,12 +21,8 @@ public class CuteParser {
 	private Iterator<Token> tokens;
 	private static Node END_OF_LIST = new Node() {};
 
-	public CuteParser(File file) {
-		try {
-			tokens = Scanner.scan(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	public CuteParser(String input) {
+		tokens = Scanner.scan(input);
 	}
 
 	private Token getNextToken() {
