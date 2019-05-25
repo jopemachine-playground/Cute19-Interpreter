@@ -191,7 +191,7 @@ public class CuteInterpreter {
 
 		// 조건에 맞는 식을 찾는다면 트리 파싱을 종료
 		if (conditionBoolean.toString() == "#T") {
-			return presentListNode.cdr();
+			return presentListNode.cdr().car();
 		} else if (conditionBoolean.toString() == "#F") {
 
 		}

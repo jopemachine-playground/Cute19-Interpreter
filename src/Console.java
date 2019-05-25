@@ -13,6 +13,7 @@ import java.awt.Font;
 
 public class Console extends JFrame {
 
+	JTextArea commandInputArea;
 	JTextArea commandLogArea;
 	String DefaultCursor = ">>";
 	
@@ -36,9 +37,9 @@ public class Console extends JFrame {
 
 		this.getContentPane().add(commandLogArea, BorderLayout.CENTER);
 		
-		commandLogArea.setText("PL HomeWork Item 1");
+		commandLogArea.setText("PL HomeWork");
 
-		JTextArea commandInputArea = new JTextArea();
+		commandInputArea = new JTextArea();
 		commandInputArea.setForeground(Color.WHITE);
 		commandInputArea.setBackground(Color.GRAY);
 		commandInputArea.setFont(new Font("Consolas", Font.ITALIC, 19));
@@ -50,10 +51,12 @@ public class Console extends JFrame {
 			public void keyPressed(KeyEvent e) {
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					AppendLine(commandLogArea, DefaultCursor + " " + commandInputArea.getText());
-					parsing(commandInputArea.getText());
-					commandInputArea.setText("");
+					String input = commandInputArea.getText();
 					e.consume();
+					commandInputArea.setText("");
+					if(isInBuildInFunction(input)) return;
+					AppendLine(commandLogArea, DefaultCursor + " " + input);
+					parsing(input);
 				}
 			}
 		});
@@ -72,6 +75,16 @@ public class Console extends JFrame {
 		Node resultNode = interpreter.runExpr(parseTree);
 		NodePrinter nodePrinter = new NodePrinter(resultNode);
 		AppendLine(commandLogArea, nodePrinter.prettyPrint());
+	}
+	
+	private boolean isInBuildInFunction(String input) {
+		switch(input) {
+		case "clear" :
+			commandLogArea.setText("PL HomeWork");
+			return true;
+		}
+		
+		return false;
 	}
 
 }
