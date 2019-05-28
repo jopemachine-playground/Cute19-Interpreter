@@ -1,21 +1,26 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.InputMap;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 import Node.Node;
 import Node.NodePrinter;
 import Scanner.CuteParser;
-import java.awt.Color;
-import java.awt.Font;
 
 public class Console extends JFrame {
-
-	JTextArea commandInputArea;
+	
 	JTextArea commandLogArea;
+	
 	String DefaultCursor = ">>";
+	
+	private int logCharsNumber = 0;
+	private int currentCaretPosition; 
 	
 	public static void main(String[] args) {
 		Console console = new Console();
@@ -29,39 +34,43 @@ public class Console extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		commandLogArea = new JTextArea();
+		commandLogArea.setForeground(Color.WHITE);
+		commandLogArea.setText(DefaultCursor);
 		commandLogArea.setFont(new Font("Consolas", Font.PLAIN, 18));
-		commandLogArea.setEditable(false);
-		commandLogArea.setBackground(Color.LIGHT_GRAY);
+		commandLogArea.setBackground(Color.BLACK);
 		commandLogArea.setLineWrap(true);
 		commandLogArea.setToolTipText("Show you the command log");
 
 		this.getContentPane().add(commandLogArea, BorderLayout.CENTER);
 		
-		commandLogArea.setText("PL HomeWork");
+		logCharsNumber = commandLogArea.getText().length();
 
-		commandInputArea = new JTextArea();
-		commandInputArea.setForeground(Color.WHITE);
-		commandInputArea.setBackground(Color.GRAY);
-		commandInputArea.setFont(new Font("Consolas", Font.ITALIC, 19));
-		commandInputArea.setToolTipText("Write the command");
-		commandInputArea.setLineWrap(true);
-		
-		commandInputArea.addKeyListener(new KeyAdapter() {
+		commandLogArea.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				
+				currentCaretPosition = commandLogArea.getCaretPosition();
+				System.out.println(currentCaretPosition);
+				// 프롬프트 및 기존의 로그를 지우지 못하게 하기 위한 코드
+				if(logCharsNumber > commandLogArea.getText().length() - 1 
+						|| currentCaretPosition < logCharsNumber) {
+					System.out.println();
+					e.consume();
+				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					String input = commandInputArea.getText();
+					String wholeInput = commandLogArea.getText();
+					String input = wholeInput.substring(logCharsNumber);
 					e.consume();
-					commandInputArea.setText("");
 					if(isInBuildInFunction(input)) return;
-					AppendLine(commandLogArea, DefaultCursor + " " + input);
 					parsing(input);
+					AppendLine(commandLogArea, DefaultCursor);
+					logCharsNumber = commandLogArea.getText().length();
 				}
 			}
 		});
 		
-		getContentPane().add(commandInputArea, BorderLayout.NORTH);
+		commandLogArea.setCaretPosition(logCharsNumber);
 	}
 	
 	private void AppendLine(JTextArea console, String command) {
@@ -80,7 +89,8 @@ public class Console extends JFrame {
 	private boolean isInBuildInFunction(String input) {
 		switch(input) {
 		case "clear" :
-			commandLogArea.setText("PL HomeWork");
+			commandLogArea.setText(DefaultCursor);
+			logCharsNumber = commandLogArea.getText().length();
 			return true;
 		}
 		
