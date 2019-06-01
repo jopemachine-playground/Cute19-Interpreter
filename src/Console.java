@@ -1,13 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.InputMap;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 
 import Node.Node;
 import Node.NodePrinter;
@@ -20,6 +20,7 @@ public class Console extends JFrame {
 	String DefaultCursor = ">>";
 	
 	private int logCharsNumber = 0;
+	
 	private int currentCaretPosition; 
 	
 	public static void main(String[] args) {
@@ -36,7 +37,7 @@ public class Console extends JFrame {
 		commandLogArea = new JTextArea();
 		commandLogArea.setForeground(Color.WHITE);
 		commandLogArea.setText(DefaultCursor);
-		commandLogArea.setFont(new Font("Consolas", Font.PLAIN, 18));
+		commandLogArea.setFont(new Font("Arial", Font.PLAIN, 17));
 		commandLogArea.setBackground(Color.BLACK);
 		commandLogArea.setLineWrap(true);
 		commandLogArea.setToolTipText("Show you the command log");
@@ -45,17 +46,21 @@ public class Console extends JFrame {
 		
 		logCharsNumber = commandLogArea.getText().length();
 
-		commandLogArea.addKeyListener(new KeyAdapter() {
+		commandLogArea.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				
 				currentCaretPosition = commandLogArea.getCaretPosition();
-				System.out.println(currentCaretPosition);
-				// 프롬프트 및 기존의 로그를 지우지 못하게 하기 위한 코드
-				if(logCharsNumber > commandLogArea.getText().length() - 1 
-						|| currentCaretPosition < logCharsNumber) {
-					System.out.println();
+				
+				if(currentCaretPosition < logCharsNumber) {
 					e.consume();
+					return;
+				}
+				
+				if((logCharsNumber == commandLogArea.getText().length()) && 
+						e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_LEFT) {
+					e.consume();
+					return;
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -67,6 +72,42 @@ public class Console extends JFrame {
 					AppendLine(commandLogArea, DefaultCursor);
 					logCharsNumber = commandLogArea.getText().length();
 				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				currentCaretPosition = commandLogArea.getCaretPosition();
+				
+				if(currentCaretPosition < logCharsNumber) {
+					e.consume();
+					return;
+				}
+				
+				if((logCharsNumber == commandLogArea.getText().length()) && 
+						e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_LEFT) {
+					e.consume();
+					return;
+				}
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				currentCaretPosition = commandLogArea.getCaretPosition();
+				
+				if(currentCaretPosition < logCharsNumber) {
+					e.consume();
+					return;
+				}
+				
+				if((logCharsNumber == commandLogArea.getText().length()) && 
+						e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_LEFT) {
+					e.consume();
+					return;
+				}
+				
 			}
 		});
 		
