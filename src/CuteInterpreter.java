@@ -166,6 +166,11 @@ public class CuteInterpreter {
 		case LAMBDA:
 			return null;
 		case DEFINE:
+			
+			leftNode = runQuote((ListNode) operand.car());
+			rightNode = runQuote(((ListNode) (operand.cdr().car()))); 
+			
+			
 			return null;
 		default:
 			break;
