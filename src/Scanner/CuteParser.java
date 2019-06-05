@@ -1,7 +1,5 @@
 package Scanner;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 
 import Node.BinaryOpNode;
@@ -51,7 +49,13 @@ public class CuteParser {
 			return listNode;
 			
 		case ID:
-			return new IdNode(tLexeme);
+			
+			if(DefineTable.lookupTable(tLexeme) == null) {
+				return new IdNode(tLexeme);
+			}
+			else {
+				return DefineTable.lookupTable(tLexeme);
+			}
 			
 		case INT:
 			if (tLexeme == null) {

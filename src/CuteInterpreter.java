@@ -7,6 +7,7 @@ import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import Node.*;
 import Scanner.CuteParser;
+import Scanner.DefineTable;
 
 public class CuteInterpreter {
 	
@@ -165,13 +166,22 @@ public class CuteInterpreter {
 
 		case LAMBDA:
 			return null;
+			
 		case DEFINE:
 			
-			leftNode = runQuote((ListNode) operand.car());
-			rightNode = runQuote(((ListNode) (operand.cdr().car()))); 
+			leftNode = (IdNode) (operand.car());
 			
+			if((operand.cdr().car()) instanceof ListNode) {
+				rightNode = (((ListNode) (operand.cdr().car()))); 
+			}
+			else {
+				rightNode = operand.cdr().car();
+			}
 			
+			DefineTable.define(leftNode.toString(), rightNode);
+			DefineTable.Debugging();
 			return null;
+			
 		default:
 			break;
 		}
