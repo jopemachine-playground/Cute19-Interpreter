@@ -12,7 +12,8 @@ import Scanner.DefineTable;
 public class CuteInterpreter {
 	
 	private void errorLog(String err) {
-		System.out.println(err);
+		Console console = Console.getInstance();
+		console.setErrBuffer(err);
 	}
 
 	public Node runExpr(Node rootExpr) {
@@ -70,6 +71,7 @@ public class CuteInterpreter {
 			} else {
 				return ((ListNode) (runQuote(operand))).car();
 			}
+            
 		case CDR:
 
 			if (operandCheckQuotedList(operand) == false) {
