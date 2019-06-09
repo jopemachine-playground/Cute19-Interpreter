@@ -2,6 +2,7 @@ package Scanner;
 import java.util.HashMap;
 import java.util.Map;
 
+import Main.Console;
 import Node.Node;
 
 public class DefineTable {
@@ -13,7 +14,8 @@ public class DefineTable {
 	}
 	
 	public static void define(String id, Node value) {
-		defineTable.put(id, value);
+		// if same key is in table, change the value 
+		defineTable.put(id, value);	
 	}
 	
 	// 테이블의 모든 내용을 출력하는 디버깅 용 함수

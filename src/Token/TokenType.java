@@ -39,4 +39,5 @@ public enum TokenType {
 				throw new IllegalArgumentException("unregistered char: " + ch);
 		}
 	}
+	
 }

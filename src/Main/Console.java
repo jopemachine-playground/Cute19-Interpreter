@@ -1,3 +1,4 @@
+package Main;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import Node.Node;
 import Node.NodePrinter;
 import Scanner.CuteParser;
+import Scanner.DefineTable;
 
 public class Console extends JFrame {
 
@@ -153,7 +155,6 @@ public class Console extends JFrame {
 				
 				nodePrinter = new NodePrinter(resultNode);
 				String output = nodePrinter.prettyPrint();
-
 				printConsole(input, output);
 				setErrBuffer("");
 			}

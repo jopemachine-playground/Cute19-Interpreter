@@ -1,3 +1,4 @@
+package Main;
 import java.io.*;
 import java.util.stream.Stream;
 
@@ -171,17 +172,25 @@ public class CuteInterpreter {
 			
 		case DEFINE:
 			
-			leftNode = (IdNode) (operand.car());
+			Node keyNode;
+			Node valueNode;
+			
+			if(!(operand.car() instanceof IdNode)) {
+				errorLog("Not defined behavior");
+				return null;
+			}
+			
+			keyNode = (IdNode) (operand.car());
 			
 			if((operand.cdr().car()) instanceof ListNode) {
-				rightNode = (((ListNode) (operand.cdr().car()))); 
+				valueNode = (((ListNode) (operand.cdr().car()))); 
 			}
 			else {
-				rightNode = operand.cdr().car();
+				valueNode = operand.cdr().car();
 			}
 			
-			DefineTable.define(leftNode.toString(), rightNode);
-			DefineTable.Debugging();
+			DefineTable.define(keyNode.toString(), valueNode);
+//			DefineTable.Debugging();
 			return null;
 			
 		default:
