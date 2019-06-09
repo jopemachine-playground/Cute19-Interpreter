@@ -1,17 +1,13 @@
-import java.io.*;
-import java.util.stream.Stream;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+package Main;
 
 import Node.*;
-import Scanner.CuteParser;
+import Scanner.DefineTable;
 
 public class CuteInterpreter {
 	
 	private void errorLog(String err) {
-		System.out.println(err);
+		Console console = Console.getInstance();
+		console.setErrBuffer(err);
 	}
 
 	public Node runExpr(Node rootExpr) {
@@ -69,6 +65,7 @@ public class CuteInterpreter {
 			} else {
 				return ((ListNode) (runQuote(operand))).car();
 			}
+            
 		case CDR:
 
 			if (operandCheckQuotedList(operand) == false) {
@@ -165,13 +162,30 @@ public class CuteInterpreter {
 
 		case LAMBDA:
 			return null;
+			
 		case DEFINE:
 			
-			leftNode = runQuote((ListNode) operand.car());
-			rightNode = runQuote(((ListNode) (operand.cdr().car()))); 
+			Node keyNode;
+			Node valueNode;
 			
+			if(!(operand.car() instanceof IdNode)) {
+				errorLog("Not defined behavior");
+				return null;
+			}
 			
+			keyNode = (IdNode) (operand.car());
+			
+			if((operand.cdr().car()) instanceof ListNode) {
+				valueNode = (((ListNode) (operand.cdr().car()))); 
+			}
+			else {
+				valueNode = operand.cdr().car();
+			}
+			
+			DefineTable.define(keyNode.toString(), valueNode);
+//			DefineTable.Debugging();
 			return null;
+			
 		default:
 			break;
 		}

@@ -18,7 +18,6 @@ public class IdNode implements ValueNode{
 		if(this == o) return true;
 		if(!(o instanceof IdNode)) return false;
 		IdNode idNode = (IdNode) o;
-		// 수정된 부분
 		return idString.equals(idNode.idString);
 	}
 	

@@ -67,7 +67,29 @@ public class BinaryOpNode implements ValueNode {
 	
 	@Override
 	public String toString() {
-		return binType.name();
+		return toChar(binType);
 	}
 
+	static String toChar(BinType type) {
+		switch ( type ) {
+			case PLUS:
+				return "+";
+			case MINUS:
+				return "-";
+			case TIMES:
+				return "*";
+			case DIV:
+				return "/";
+			case LT:
+				return "<";
+			case GT:
+				return ">";
+			case EQ:
+				return "=";
+
+			default:
+				throw new IllegalArgumentException("unregistered char: " + type);
+		}
+	}
+	
 }
