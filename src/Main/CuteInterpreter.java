@@ -1,13 +1,6 @@
 package Main;
-import java.io.*;
-import java.util.stream.Stream;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import Node.*;
-import Scanner.CuteParser;
 import Scanner.DefineTable;
 
 public class CuteInterpreter {
