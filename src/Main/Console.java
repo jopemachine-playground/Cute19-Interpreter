@@ -21,8 +21,6 @@ import javax.swing.border.EmptyBorder;
 import Node.Node;
 import Node.NodePrinter;
 import Scanner.CuteParser;
-import Scanner.DefineTable;
-import jdk.internal.org.objectweb.asm.tree.analysis.Interpreter;
 
 public class Console extends JFrame {
 
