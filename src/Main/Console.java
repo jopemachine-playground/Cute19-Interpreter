@@ -22,6 +22,7 @@ import Node.Node;
 import Node.NodePrinter;
 import Scanner.CuteParser;
 import Scanner.DefineTable;
+import jdk.internal.org.objectweb.asm.tree.analysis.Interpreter;
 
 public class Console extends JFrame {
 
@@ -33,7 +34,7 @@ public class Console extends JFrame {
 	private NodePrinter nodePrinter;
 	
 	private CuteParser cuteParser;
-	private CuteInterpreter interpreter = new CuteInterpreter();
+	private CuteInterpreter interpreter;
 	
 	private static final String defaultPrompt = "$";
 	private static final String initialString = "Welcome to Cute Interpreter!";
@@ -143,6 +144,7 @@ public class Console extends JFrame {
 				}
 				
 				cuteParser = new CuteParser(input);
+				interpreter = new CuteInterpreter(input);
 				parseTree = cuteParser.parseExpr();
 				resultNode = interpreter.runExpr(parseTree);
 				

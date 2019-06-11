@@ -83,8 +83,35 @@ public class FunctionNode implements ValueNode {
 	
 	@Override
 	public String toString() {
+		return toChar(this.funcType);
+	}
 
-		return funcType.name();
+	static String toChar(FunctionType type) {
+		switch ( type ) {
+			case DEFINE:
+				return "define";
+			case CAR:
+				return "car";
+			case CDR:
+				return "cdr";
+			case LAMBDA:
+				return "lambda";
+			case ATOM_Q:
+				return "atom?";
+			case EQ_Q:
+				return "eq?";
+			case NOT:
+				return "not";
+			case QUOTE:
+				return "quote";
+			case CONS:
+				return "cons";
+			case NULL_Q:
+				return "null?";
+
+			default:
+				throw new IllegalArgumentException("unregistered char: " + type);
+		}
 	}
 
 	public void setValue(FunctionType tType) {

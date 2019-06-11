@@ -1,6 +1,7 @@
 package Scanner;
 
 import java.util.Iterator;
+import java.util.List;
 
 import Node.BinaryOpNode;
 import Node.BinaryOpNode.BinType;
@@ -47,7 +48,6 @@ public class CuteParser {
 		if (t == null) {
 			return null;
 		}
-
 		TokenType tType = t.type();
 		String tLexeme = t.lexme();
 
@@ -62,9 +62,11 @@ public class CuteParser {
 			if(isDefineStatement(input)) {
 				return new IdNode(tLexeme);
 			}
+
 			if (DefineTable.lookupTable(tLexeme) == null) {
 				return new IdNode(tLexeme);
 			} else {
+
 				return DefineTable.lookupTable(tLexeme);
 			}
 
@@ -180,6 +182,19 @@ public class CuteParser {
 
 		}
 	}
+
+//	private Node LookupRecursiveIdNode(ListNode valueNode){
+//
+//		if(valueNode.car() instanceof IdNode){
+//			return
+//		}
+//
+//		if(valueNode.cdr() == ListNode.EMPTY_LIST){
+//			return null;
+//		}
+//
+//		return LookupRecursiveIdNode(valueNode.cdr());
+//	}
 
 	private ListNode parseExprList() {
 		Node head = parseExpr();
