@@ -276,15 +276,6 @@ public class CuteInterpreter {
 
 			case LAMBDA:
 
-				Node argumentNodes;
-				Node valueFunctionNode;
-
-				argumentNodes = (ListNode) (operand.car());
-				valueFunctionNode = (((ListNode) (operand.cdr().car())));
-
-				System.out.println("실행");
-
-
 				return null;
 
 			case DEFINE:
