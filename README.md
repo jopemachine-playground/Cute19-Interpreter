@@ -9,6 +9,8 @@ Java로 작성
 # Part of Reports
 
 * Cute Interpreter Define 처리 (Item 2)
+
+```
 DefineTable 클래스는 defineTable이란 HashMap static 객체를 갖는 클래스입니다. lookupTable()를 사용해 map에
 접근하고, define을 통해 맵에 새 요소를 정의합니다.
 
@@ -36,10 +38,11 @@ errBuffer에 대응하는 오류 메시지를 넣어놓고, 콘솔에 출력하�
 콘솔 객체는 1 개만 있으면 충분하기 때문에, 싱글톤으로 만들어 전역에서 접근 가능하게 만들었습니다. errBuffer는
 
 에러를 출력하는데 사용하는 변수이고, 매 입력 때 마다 비워집니다.
-
+```
 
 * Cute Interpreter Define 처리 (Item 3)
 
+```
 lambda식은 기본적으로 formal parameter와 식이 오고, 그 뒤에 actual parameter가 주어질 수 있다.
 actual parameter의 유무는 ListNode 밖에서 확인해야 하기 때문에 ListNode를 처리할 때,
 그 ListNode 안에 actual parameter가 있는지 확인해서 case를 나눈다.
@@ -79,3 +82,5 @@ formal parameter를 바탕으로 생성된 parsing tree 대신 actual parameter�
 로 생성하고, 다시 parsing tree를 만든다.
 따라서 ListNode에 toString 함수를 만들어 ListNode를 재귀적으로 돌면서 String으로
 만들어 반환한다.
+
+```
