@@ -6,6 +6,8 @@ Java로 작성
 
 # Screen shot
 
+<img src="./Screenshot.png"></img>
+
 # Part of Reports
 
 * Cute Interpreter Define 처리 (Item 2)
