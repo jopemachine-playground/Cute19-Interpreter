@@ -6,7 +6,9 @@ Java로 작성
 
 <h2>Screen shot</h2>
 
+<p align="center">
 <img src="./Screenshot.png"></img>
+</p>
 
 <h2>Part of Reports</h2>
 
