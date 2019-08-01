@@ -2,7 +2,8 @@
 2019 CNU Programming Language Homework
 
 <h2>Development Environment</h2>
-Java로 작성
+
+>Java AWT, Swing
 
 <h2>Screen shot</h2>
 
